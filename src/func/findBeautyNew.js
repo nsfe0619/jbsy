@@ -5,7 +5,7 @@ module.exports.findBeautyNew = find;
 
 async function find(context) {
     let beautyArr = await getBeautyArr();
-    if(!beautyArr)context.replyText("沒抽到妹子請重抽")
+    if(!beautyArr || beautyArr.length===0)context.replyText("沒抽到妹子請重抽")
     let beautyPage = beautyArr[parseInt(getBeautyArr.length * Math.random())];
     let beautyImg = await getImages(beautyPage.link);
     var imgArr = beautyImg.split("/");
@@ -31,7 +31,7 @@ const getBeautyArr = () => {
         let beautyArr = [];
         var url =
             'https://www.ptt.cc/bbs/Beauty/index' +
-            parseInt(4002 * Math.random()) +
+            parseInt(2002 +2000* Math.random()) +
             '.html';
         request.post(
             {
@@ -47,7 +47,8 @@ const getBeautyArr = () => {
                     });
                 });
                 if (beautyArr.length > 0) resolve(beautyArr);
-                else reject(false);
+                else {
+                    reject(false);}
             }
         );
     });
