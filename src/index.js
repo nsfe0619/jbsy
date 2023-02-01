@@ -1,63 +1,63 @@
-var divination = require("./func/divination");
-var weather = require("./func/weather");
-var findBeauty = require("./func/findBeauty");
-var findBeautyNew = require("./func/findBeautyNew");
+var divination = require('./func/divination');
+var weather = require('./func/weather');
+var findBeauty = require('./func/findBeauty');
+var pokemon = require('./func/pokemon');
 
 module.exports = async function App(context) {
   // await context.sendText('Welcome to Bottender');
-  console.log('context.event', context.event);
+  // console.log('context.event', context.event);
   if (context.event) {
     // 判斷文字
     if (context.event.isText) {
       // 判斷 天氣
-      if (context.event.message.text.split(' ').length > 1 && context.event.message.text.split(' ')[1] == '天氣') {
+      if (
+        context.event.message.text.split(' ').length > 1 &&
+        context.event.message.text.split(' ')[1] == '天氣'
+      ) {
         let loc = context.event.message.text.split(' ')[0];
         weather.weather(context, loc);
       } else {
         // 完整比對關鍵字
         switch (context.event.message.text) {
           case '你會做什麼':
-            context.replyText(
-              `我會做這些: 運勢 看妹子`,
-              {
-                quickReply: {
-                  items: [
-                    // {
-                    //   type: 'action',
-                    //   action: {
-                    //     type: 'message',
-                    //     label: '貼圖',
-                    //     text: '貼圖',
-                    //   },
-                    // },
-                    // {
-                    //   type: 'action',
-                    //   action: {
-                    //     type: 'message',
-                    //     label: '地址',
-                    //     text: '地址',
-                    //   },
-                    // },
-                    {
-                      type: 'action',
-                      action: {
-                        type: 'message',
-                        label: '運勢',
-                        text: '運勢',
-                      },
+            context.replyText(`我會做這些: 運勢 看妹子`, {
+              quickReply: {
+                items: [
+                  // {
+                  //   type: 'action',
+                  //   action: {
+                  //     type: 'message',
+                  //     label: '貼圖',
+                  //     text: '貼圖',
+                  //   },
+                  // },
+                  // {
+                  //   type: 'action',
+                  //   action: {
+                  //     type: 'message',
+                  //     label: '地址',
+                  //     text: '地址',
+                  //   },
+                  // },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'message',
+                      label: '運勢',
+                      text: '運勢',
                     },
-                    {
-                      type: 'action',
-                      action: {
-                        type: 'message',
-                        label: '看妹子',
-                        text: '看妹子',
-                      },
+                  },
+                  {
+                    type: 'action',
+                    action: {
+                      type: 'message',
+                      label: '看妹子',
+                      text: '看妹子',
                     },
-                  ],
-                },
-              }
-            );
+                  },
+                ],
+              },
+            });
             break;
 
           case '貼圖':
@@ -76,10 +76,13 @@ module.exports = async function App(context) {
             divination.divination(context);
             break;
           case '看妹子':
-            findBeautyNew.findBeautyNew(context);
+            findBeauty.findBeauty(context);
+            break;
+          case '查屬性':
+            pokemon.pokemon(context);
             break;
           default:
-            // context.replyText('我聽不懂你在講什麼');
+          // context.replyText('我聽不懂你在講什麼');
         }
       }
     } else if (context.event) {
